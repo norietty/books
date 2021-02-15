@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Books
+{% endblock  %}
+
+{% block content %}
+{% if session['user_id']%}
+<div class="" style="margin:auto;width:50%">
+    <form class="" action="{{url_for('search')}}" method="post">
+        {{ form.hidden_tag()}}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4"> </legend>
+            <div class="form-group text-center">
+                {{ form.search.label(class="form-control-label") }}
+                <div style="margin:auto;width:30%">
+                    {{ form.select(class="form-control")}}
+                </div>
+                {{ form.search(class="form-control form-control-lg") }}
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+            <div class="form-group text-center">
+
+            </div>
+        </fieldset>
+    </form>
+</div>
+<div>
+    <p style="text-align: center;"> <b>Here is a few books you might like </b></p>
+</div>
+<div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>author</th>
+                <th>Year</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <td colspan="4"></td>
+            </tr>
+        </tfoot>
+        <tbody>
+            {% for row in result %}
+            <tr>
+                <td> <a href="{{url_for('book', book_id=row['id'])}}"> {{row['title']}} </a></td>
+                <td> {{row['author']}}</td>
+                <td> {{row['year']}}</td>
+
+            </tr>
+            {% endfor %}
+    </table>
+</div>
+{% else%}
+<div>
+    <p> You have an account <a herf="{{url_for('login')}}">log in </a></p>
+    <p> Need an account you can <a herf="{{url_for('register')}}"> register</a></p>
+</div>
+{% endif%}
+{% endblock  %}

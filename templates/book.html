@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Books
+{% endblock  %}
+
+{% block content %}
+
+<div style="text-align: left;">
+    <h3>Book informations</h3>
+    <p> Book's title: <b>{{book_info['title']}}</b></p>
+    <p> The author is <b>{{book_info['author']}}</b> </p>
+    <p> Isbn of the book is <b> {{book_info['isbn']}} </b></p>
+    <p> The book was published in the year <b> {{book_info['year']}}</b></p>
+    <p> The averge rating in our Website is <b> {{rating}} </b></p>
+    <h3> Goodread informations</h3>
+    {% if data %}
+        <p> The number of ratings the book recived from  <a href="https://www.goodreads.com/">goodread</a> users is is <em>{{data['work_ratings_count']}}</em></p>
+        <p> The number of ratings the book recived from <a href="https://www.goodreads.com/">goodread</a> users is is <em> {{data['average_rating']}} </em></p>
+    {% endif %}
+    <h3> Reviews</h3>
+    {% for row in reviwes %}
+        <p> {{row['review']}}</p>
+    {% endfor %}
+</div>
+{% if review_user%}1
+{% else %}
+<div class="" style="margin:auto;width:50%">
+    <form class="" action="{{url_for('book', book_id= book_info['id'])}}" method="post">
+        {{ form.hidden_tag()}}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4"> </legend>
+            <div class="form-group text-center">
+                <div style="margin:auto;width:30%">
+                    {{ form.select(class="form-control")}}
+                </div>
+                {{ form.review(class="form-control form-control-lg", id="exampleFormControlTextarea1", rows="5")}}
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+            <div class="form-group text-center">
+
+            </div>
+        </fieldset>
+    </form>
+</div>
+{% endif %}
+{% endblock  %}
